@@ -1,0 +1,39 @@
+﻿.formStyle {
+    width: 75%;
+    border: 1px solid #CCC;
+    border-radius: 1em;
+    background-color: #F5F5F5;
+    padding: 0;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.formInfo {
+    border-radius: 1em 1em 0 0;
+    background-image: url(img/CustomerSupport2.png);
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size:cover;
+    min-height: 250px;
+}
+
+
+@media (min-width: 768px) {
+    .formInfo {
+        border-radius: 1em 0 0 1em;
+        background-image: url(img/CustomerSupport2.png);
+        background-repeat: no-repeat;
+        background-position: top;
+        background-size: cover;
+        min-height: 300px;
+    }
+}
+
+/* typical phone screen resolution */
+@media only screen and (max-width : 667px) {
+}
+/* landscape orientation */
+@media only screen and (min-width : 375px) and (max-width : 667px) and (orientation : landscape) {
+}
+/* portrait orientation */
+@media only screen and (min-width : 375px) and (max-width : 667px) and (orientation : portrait) {
+}

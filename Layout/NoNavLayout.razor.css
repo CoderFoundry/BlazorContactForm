@@ -1,0 +1,17 @@
+﻿.content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+}
+
+.footerStyle{
+    background-color: rgb(0, 87, 175, 0.10)
+}

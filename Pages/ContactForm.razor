@@ -1,0 +1,101 @@
+﻿@using System.ComponentModel.DataAnnotations
+@layout NoNavLayout
+@page "/ContactForm"
+
+<div class="h-100 d-flex flex-column align-items-center justify-content-center ">
+    <div class="row formStyle p-0">
+        <div class="col-12 col-md-4 formInfo">           
+        </div>
+        <div class="col-12 col-md-8 p-4">
+            <h2 class="mt-3">Have an Issue?</h2>
+            <p>Fill out the form and we will get back to you as soon as possible.</p>
+            <EditForm  Model="contactForm" OnValidSubmit="HandleValidSubmit">
+                <DataAnnotationsValidator />
+                <div class="mb-3">
+                    <label class="form-label" for="name">Name:</label>
+                    <InputText class="form-control" id="name" @bind-Value="contactForm.Name" />
+                    <ValidationMessage For="@(() => contactForm.Name)" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="email">Email:</label>
+                    <InputText class="form-control" id="email" @bind-Value="contactForm.Email" />
+                    <ValidationMessage For="@(() => contactForm.Email)" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="phone">Phone Number:</label>
+                    <InputText class="form-control" id="phone" @bind-Value="contactForm.PhoneNumber" />
+                    <ValidationMessage For="@(() => contactForm.PhoneNumber)" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="priority">Priority:</label>
+                    <InputSelect class="form-select" @bind-Value="contactForm.Priority" id="priority">
+                        @foreach (var option in priorityLevels)
+                        {
+                            <option value="@option.Value">@option.Description</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => contactForm.Priority)" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="message">Problem Description:</label>
+                    <InputTextArea class="form-control" id="message" @bind-Value="contactForm.Message" rows="4" />
+                    <ValidationMessage For="@(() => contactForm.Message)" />
+                </div>
+                <div class="text-end">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+            </EditForm>
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    private Contact contactForm = new Contact();
+
+    private List<PriorityLevel> priorityLevels = new List<PriorityLevel>
+    {
+        new PriorityLevel { Value = 1, Description = "Low" },
+        new PriorityLevel { Value = 2, Description = "Below Normal" },
+        new PriorityLevel { Value = 3, Description = "Normal" },
+        new PriorityLevel { Value = 4, Description = "Above Normal" },
+        new PriorityLevel { Value = 5, Description = "High" }
+    };
+
+    private void HandleValidSubmit()
+    {
+        // Do something with the form values
+    }
+
+    public class Contact
+    {
+        [Required, MaxLength(50)]
+        public string? Name { get; set; }
+
+        [Required, EmailAddress]
+        public string? Email { get; set; }
+
+        [Required]
+        [RegularExpression(@"^\([\d]{3}\) [\d]{3}-[\d]{4}$", ErrorMessage = "Phone number must be in the format (123) 456-7890")]
+        public string? PhoneNumber { get; set; }
+
+        [Required]
+        [Range(1, 5, ErrorMessage = "Priority must be between 1 and 5")]
+        public int Priority { get; set; }
+
+        [Required]
+        [MaxLength(150, ErrorMessage="Message is to long.")]
+        public string? Message { get; set; }
+    }
+
+
+
+    public class PriorityLevel
+    {
+        public int Value { get; set; }
+        public string Description { get; set; }
+    }
+
+}
